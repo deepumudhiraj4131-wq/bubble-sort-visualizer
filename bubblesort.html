@@ -1,0 +1,33 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Bubble Sort Visualizer</title>
+<style>
+body{background:#111;color:white;text-align:center;font-family:Arial}
+.bar{display:inline-block;width:20px;margin:2px;background:#4cafef}
+.controls{margin:10px}
+</style>
+</head>
+<body>
+<h2>Bubble Sort (O(n²))</h2>
+<div class="controls">
+<button onclick="generate()">Generate</button>
+<button onclick="start()">Start</button>
+<button onclick="prev()">Prev</button>
+<button onclick="next()">Next</button>
+Speed:<input type="range" id="speed" min="50" max="1000" value="200">
+</div>
+<div id="array"></div>
+<script>
+let arr=[],steps=[],iStep=0;
+function generate(){arr=[];steps=[];for(let i=0;i<20;i++)arr.push(Math.random()*100|0);draw(arr)}
+function draw(a){let d=document.getElementById('array');d.innerHTML='';a.forEach(v=>{let b=document.createElement('div');b.className='bar';b.style.height=v*2+'px';d.appendChild(b)})}
+function record(a){steps.push([...a])}
+function start(){steps=[];let a=[...arr];for(let i=0;i<a.length;i++){for(let j=0;j<a.length-i-1;j++){if(a[j]>a[j+1]){[a[j],a[j+1]]=[a[j+1],a[j]];record(a)}}}iStep=0;play()}
+function play(){if(iStep>=steps.length)return;draw(steps[iStep++]);setTimeout(play,document.getElementById('speed').value)}
+function next(){if(iStep<steps.length)draw(steps[iStep++])}
+function prev(){if(iStep>0)draw(steps[--iStep])}
+generate();
+</script>
+</body>
+</html>
